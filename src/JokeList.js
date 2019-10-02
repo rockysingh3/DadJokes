@@ -8,13 +8,25 @@ class JokeList extends Component {
         numJokesToGet: 10
     }
 
+    constructor(props) {
+        super(props)
+        this.state = { jokes: [] }
+    }
+
 
     async componentDidMount() {
-        let res = await axios.get('https://icanhazdadjoke.com/', {
-            headers: { Accept: 'application/json' }
-        })
+        // this array will store all the jokes
+        let jokes = []
+
+        // Calling the api numJokesToGet times 
+        while(jokes.length < this.props.numJokesToGet) {
+            let res = await axios.get('https://icanhazdadjoke.com/', {
+                headers: { Accept: 'application/json' }
+            })
+            jokes.push(res.data.joke)
+        }
         
-        console.log(res)
+        console.log(jokes)
     }
     render() {
         return (
